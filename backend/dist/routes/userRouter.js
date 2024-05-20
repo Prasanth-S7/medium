@@ -50,3 +50,20 @@ exports.userRouter.post('/createPost', (req, res) => __awaiter(void 0, void 0, v
         return;
     }
 }));
+exports.userRouter.get('/posts', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const username = req.body.username;
+        const posts = yield (0, db_1.getUserPosts)(username);
+        if (posts) {
+            res.json({
+                posts
+            });
+        }
+    }
+    catch (error) {
+        res.json({
+            msg: "Internal Server Error"
+        });
+        console.log(error);
+    }
+}));

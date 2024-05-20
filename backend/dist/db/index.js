@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletePost = exports.getAllPosts = exports.getPostbyId = exports.createPost = exports.isUserExists = exports.createUser = void 0;
+exports.getUserPosts = exports.deletePost = exports.getAllPosts = exports.getPostbyId = exports.createPost = exports.isUserExists = exports.createUser = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const createUser = (userCredentials) => __awaiter(void 0, void 0, void 0, function* () {
@@ -92,7 +92,6 @@ const getAllPosts = () => __awaiter(void 0, void 0, void 0, function* () {
 exports.getAllPosts = getAllPosts;
 const deletePost = (id) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log(id);
         const isDeleted = yield prisma.posts.delete({
             where: {
                 postId: id
@@ -106,3 +105,18 @@ const deletePost = (id) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.deletePost = deletePost;
+const getUserPosts = (username) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const posts = yield prisma.user.findFirst({
+            where: {
+                username: username
+            }
+        });
+        return posts;
+    }
+    catch (error) {
+        console.log(error);
+        return;
+    }
+});
+exports.getUserPosts = getUserPosts;
