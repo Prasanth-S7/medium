@@ -25,15 +25,17 @@ export const isUserExists = async (email: string) => {
                 email: email
             },
         })
-        return user;
+        if (user)
+            return user;
+        else return null
     }
     catch (error) {
         console.log(error);
-        return;
+        return null;
     }
 }
 
-export const createPost = async (postObjects: PostObjects)=>{
+export const createPost = async (postObjects: PostObjects) => {
     try {
         const createPost = await prisma.posts.create({
             data: {
@@ -50,61 +52,61 @@ export const createPost = async (postObjects: PostObjects)=>{
     }
 }
 
-export const getPostbyId = async(id:string)=>{
-    try{
+export const getPostbyId = async (id: string) => {
+    try {
         const getPost = await prisma.posts.findFirst({
-            where:{
-                postId:id
+            where: {
+                postId: id
             }
         })
-        if(getPost){
+        if (getPost) {
             return getPost;
         }
         return null;
     }
-    catch(error){
+    catch (error) {
         console.log(error)
     }
 }
 
-export const getAllPosts = async()=>{
-    try{
+export const getAllPosts = async () => {
+    try {
         const allPosts = await prisma.posts.findMany();
         console.log("hi")
         console.log(allPosts)
         return allPosts;
     }
-    catch(error){
+    catch (error) {
         console.log(error)
         return null;
     }
 }
 
-export const deletePost = async(id:string)=>{
-    try{
+export const deletePost = async (id: string) => {
+    try {
         const isDeleted = await prisma.posts.delete({
-            where:{
-                postId:id
+            where: {
+                postId: id
             }
         })
         return isDeleted;
     }
-    catch(error){
+    catch (error) {
         console.log(error)
         return null;
     }
 }
 
-export const getUserPosts =async(username:string)=>{
-    try{
+export const getUserPosts = async (username: string) => {
+    try {
         const posts = await prisma.user.findFirst({
-            where:{
-                username:username
+            where: {
+                username: username
             }
-        })     
-        return posts;   
+        })
+        return posts;
     }
-    catch(error){
+    catch (error) {
         console.log(error);
         return;
     }
